@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <style>
+    body {
+      background-color: beige;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    li {
+      list-style-type: none;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+    }
+
+    .addBtn {
+      color: black;
+    }
+
+    .blogs {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog {
+      font-size: 21px;
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .blog:hover {
+      background: white;
+    }
+
+    .blog>.name {
+      color: black;
+    }
+
+    .blog>.actionBtns {
+      width: 140px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .blog>.actionBtns>a {
+      color: #999;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .popup-content h2 {
+      margin-top: 0;
+    }
+
+    .popup-content label {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .popup-content input,
+    .popup-content textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Personal Blog</h1>
+    <a href="/new" class="addBtn">+ Add</a>
+  </header>
+  <ul class="blogs">
+    <% if (data.length> 0) { %>
+      <% data.forEach((d)=> { %>
+        <li class="blog">
+          <a href="/article/<%= d.id %>" class="name">
+            <%= d.title %>
+          </a>
+          <span class="actionBtns">
+            <a id="editBtn" href="/edit/<%= d.id %>">Edit</a>
+            <a id="deleteBtn" href="" onclick="deleteArticle('<%= d.id %>')">Delete</a>
+          </span>
+        </li>
+        <% }); %>
+          <% }; %>
+  </ul>
+</body>
+
+<script>
+  async function deleteArticle(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this article?");
+    if (confirmDelete) {
+      const res = await fetch(`http://localhost:3000/delete/${id}`, {
+        method: "DELETE"
+      });
+
+      if (res.ok) {
+        location.reload();
+      } else {
+        window.location.href = "/login";
+      }    
+    }
+  }
+</script>
+
+</html>

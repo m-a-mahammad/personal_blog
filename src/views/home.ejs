@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <style>
+    body {
+      background-color: beige;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    li {
+      list-style-type: none;
+    }
+
+    .blogs {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog {
+      font-size: 21px;
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .blog:hover {
+      background: white;
+    }
+
+    .blog>.name {
+      color: #000;
+    }
+
+    .blog>.date {
+      color: #999;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Personal Blog</h1>
+  <ul class="blogs">
+    <% if (data.length > 0) { %>
+      <% data.forEach((d) => { %>
+        <li class="blog">
+          <a href="/article/<%= d.id %>" class="name"><%= d.title %></a>
+          <span class="date"><%= d.date %></span>
+        </li>
+      <% }); %>
+    <% }; %>
+  </ul>
+</body>
+
+</html>

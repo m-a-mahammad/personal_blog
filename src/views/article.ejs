@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= data.title %>
+  </title>
+  <style>
+    body {
+      background-color: beige;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wrapper {
+      width: 60%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: .5px .5px 1px #555;
+
+    }
+
+    .blog {
+      background-color: wheat;
+      border-radius: 16px;
+      padding: 30px;
+      height: 84vh;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+
+    .blog::-webkit-scrollbar {
+      width: 10px;
+      margin: 10px;
+    }
+
+    .blog::-webkit-scrollbar-track {
+      background-color: #e7e7e7;
+    }
+
+    .blog::-webkit-scrollbar-thumb {
+      background-color: #d55959;
+    }
+
+    .name {
+      margin-bottom: 0;
+    }
+
+    .date {
+      color: #999;
+    }
+
+    .content {
+      white-space: pre-line;
+    } 
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="blog">
+      <h2 class="name">
+        <%= data.title %>
+      </h2>
+      <p class="date">
+        <%= data.date %>
+      </p>
+      <div class="content">
+        <%= data.content %>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

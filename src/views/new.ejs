@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: beige;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .blog {
+      background-color: #fff;
+      padding: 25px;
+      padding-right: 47px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 600px;
+      max-width: 90%;
+    }
+
+    .blog input,
+    .blog textarea {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .blog input:focus,
+    .blog textarea:focus {
+      outline: none;
+    }
+
+    #publishBtn {
+      background-color: #d55959;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div id="newForm" class="blog">
+      <input id="titleInp" type="text" class="name" placeholder="Title">
+      <input id="dateInp" type="date" class="date" placeholder="Date">
+      <textarea id="contentInp" rows="20" cols="100" class="content" placeholder="Content"
+        style="padding: 10px;"></textarea>
+      <button id="publishBtn">Publish</button>
+    </div>
+  </div>
+</body>
+
+<script>
+  const titleInp = document.getElementById("titleInp");
+  const dateInp = document.getElementById("dateInp");
+  const contentInp = document.getElementById("contentInp");
+  const publishBtn = document.getElementById("publishBtn");
+
+  window.addEventListener("DOMContentLoaded", () => {
+    publishBtn.addEventListener("click", async () => {
+      const res = await fetch("http://localhost:3000/new/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: titleInp.value,
+          date: new Date(dateInp.value).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }),
+          content: contentInp.value
+        })
+      })
+
+
+      if (res.ok) {
+        window.location.href = "/admin";
+      } else if (res.status === 400) {
+        alert("Error: Missing fields. Please fill in all fields.");
+      } else {
+        window.location.href = "/login";
+      }
+    })
+  })
+</script>
+
+</html>
